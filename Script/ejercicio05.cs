@@ -2,27 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class controller : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
-    public Vector3 goal;
     public float speed;
-    public float accuracy = 0.05f;
+    public  Vector3 target;
+    public float accuracy;
 
-        // Start is called before the first frame update
+
+    // Start is called before the first frame update
     void Start()
     {
-        transform.LookAt(goal);
+        speed = 1f;
+        accuracy = 0.01f;
+
+        transform.LookAt(target);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = goal - transform.position;
-        if (direction.magnitude > accuracy)
+        var step =  speed * Time.deltaTime;
+
+
+        Vector3 direction = target - transform.position;
+       
+
+        if(direction.magnitude > accuracy)
         {
-            transform.Translate(speed*Input.GetAxis("Horizontal")*Time.deltaTime,speed*Input.GetAxis("Vertical")*Time.deltaTime,0f) * direction.normalized;
+            transform.Translate(direction.normalized * step, Space.World);
+            
         }
-        
+
     }
-}
+
+    }
